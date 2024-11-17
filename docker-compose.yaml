@@ -1,0 +1,15 @@
+services:
+  openfga:
+    image: openfga/openfga
+    command: run
+    environment:
+      - OPENFGA_PLAYGROUND_ENABLED=true
+    ports:
+      - 8080:8080
+  openfga-init:
+    image: openfga/cli
+    command: store import --file=store.fga.yaml --api-url=http://openfga:8080
+    volumes:
+      - ./store.fga.yaml:/store.fga.yaml
+    depends_on:
+      - openfga

@@ -1,0 +1,25 @@
+name: SysEleven IAM Demo
+model: |+
+  model
+    schema 1.1
+
+  type user
+
+  type project
+    relations
+      define owner: [user]
+      define reader: [user] or writer
+      define writer: [user] or owner
+      define can_delete_project: owner
+tuples:
+  - user: user:alice
+    relation: owner
+    object: project:1
+  - user: user:alice
+    relation: reader
+    object: project:2
+  - user: user:bob
+    relation: owner
+    object: project:2
+tests:
+  - name: dummy
